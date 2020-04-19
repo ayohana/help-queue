@@ -4,6 +4,32 @@
 
 ## Notes
 
+* What is React?
+
+  * At its core, it's a JavaScript **library** for developing the view layer. A library focuses on one piece of functionality and that's exactly what React does. It isn't concerned with the back-end of an application. Instead, it manages how user interfaces look and behave.
+
+  * React is also **highly dynamic**. This means it can handle views that need to change a lot. React allows us to quickly and dynamically update the UI without reloading pages. Any application or site that requires frequent updates is a great candidate for React
+
+* Why use React?
+
+  * **Component-Based** - which assists in organizing even the most complex user interfaces into small packages of dedicated functionality. We can also reuse components to keep projects organized and DRY.
+
+  * **Declarative** - declarative programming is when we write code that describes the intended end result instead of writing every single step required to reach that result. This saves us time and is also easier to read and understand.
+
+  * **Data Model Synchronization** - updating user interfaces to reflect changing application data is one of the most difficult challenges that web developers face on a day-to-day basis. React includes built-in functionality to automatically synchronize our data models with our user interface. That means when we update a piece of data in our application (called `state`), we can code our user interface to automatically update to reflect that change.
+
+  * **The Efficient Virtual DOM** - allows us to interact with the DOM more efficiently and with much less code than other libraries and frameworks.
+
+  * **Easier to Create Single Page Applications** - for example, Facebook, Gmail, Instagram, Twitter are single-page apps.
+
+  * **JSX** - allows developers to mix HTML with JavaScript. While not mandatory, developers report that JSX makes developing in React much easier. Nearly all React applications use JSX syntax.
+
+  * **Support** - Facebook and Instagram maintain React. These are large, established companies with the resources to support and maintain React (and its documentation) into the foreseeable future. Our applications will be more stable if we use well-supported tools.
+
+  * **Library Benefits** - Because React is just a view library, developers have tremendous flexibility to build out other parts of their applications as they see fit.
+
+  * **React Native and VR** - React developers can also explore building mobile-friendly applications with React Native. Both React and React Native follow the same design patterns. React is also developing React VR, a framework for building interactive virtual reality apps using React and JavaScript. Once you have a strong foundation in React, you'll be that much more prepared to build mobile-friendly and virtual reality applications.
+
 * **The Virtual DOM**
 
   1. **React Creates its own Virtual DOM
@@ -37,6 +63,12 @@
 * React components accept properties (known as **props**) passed down from a parent. Because React components are functions, these props are actually just a special kind of argument.
 
 * **Props Are Read-Only.** React components aren't just functions - they are _pure functions_. As we know from our functional programming week, pure functions don't have side effects and don't alter state. We need to follow these same rules when we are working with props. We will **never alter the value of props** because this would alter the state of our application and break a cardinal rule of pure functions: no side effects. For that reason, it's very important to remember that **props are read-only.**
+
+* Use extreme caution when using external stylesheets with React. Here are the suggested guidelines:
+
+  * If your application will have any global style rules, put them in `index.css`.
+  * If you plan to use stylesheets for individual components (_which we don't recommend_), make sure that classes and ids very specifically to pinpoint elements in that component.
+  * Some animations and pseudo class selectors (like `hover`) can't be implemented with recommended practices like CSS objects - so stylesheets may be an acceptable option in these use cases.
 
 <details>
 
