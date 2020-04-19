@@ -1,19 +1,20 @@
 import React from "react";
+import Header from "./Header";
+import TicketList from "./TicketList";
 
 function App(){
   const name = "Thato";
   const name2 = "Haley";
   return (
     <ReactFragment>
-    <h1>Help Queue</h1>
-    <h3>3a</h3>
-    <h3>{name} and {name2}</h3>
-    <p><em>Firebase entries not saving!</em></p>
-    {/* This is a JSX comment. */}
-    <hr/>
-  </ReactFragment>
+      <Header /> {/* Added <Header /> as a child element of <ReactFragment> */}
+      <TicketList />
+      {/* This is a JSX comment. */}
+      <hr/>
+    </ReactFragment>
   );
 }
 // All components returning more than one element must be wrapped in a <ReactFragment>.
+// As we can see, our App component is really just a container for our other components now.
 
 export default App;
