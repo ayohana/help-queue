@@ -3,15 +3,13 @@ import Header from "./Header";
 import TicketList from "./TicketList";
 
 function App(){
-  const name = "Thato";
-  const name2 = "Haley";
   return (
-    <ReactFragment>
+    <React.Fragment>
       <Header /> {/* Added <Header /> as a child element of <ReactFragment> */}
       <TicketList />
       {/* This is a JSX comment. */}
       <hr/>
-    </ReactFragment>
+    </React.Fragment>
   );
 }
 // All components returning more than one element must be wrapped in a <ReactFragment>.
