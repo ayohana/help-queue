@@ -1,12 +1,12 @@
 import React from "react";
 import Header from "./Header";
-import TicketList from "./TicketList";
+import TicketControl from "./TicketControl";
 
 function App(){
   return (
     <React.Fragment>
       <Header /> {/* Added <Header /> as a child element of <ReactFragment> */}
-      <TicketList />
+      <TicketControl />
       {/* This is a JSX comment. */}
       <hr/>
     </React.Fragment>
