@@ -9,10 +9,11 @@ class TicketControl extends React.Component {
     this.state = {
       formVisibleOnPage: false
     }; // this is our DEFAULT STATE
-    this.handleClick = this.handleClick.bind(this); // whenever this.handleClick is called, it should have the current context of this bound to it. Because this line of code is inside the constructor, this is an instance of the class itself, which is exactly what we need. 
   }
 
-  handleClick() {
+
+  // Because this method uses arrow notation, this is automatically bound to its current lexical scope, which is an instance of the class itself. (An ES6 feature)
+  handleClick = () => {
     this.setState(prevState => ({
       formVisibleOnPage: !prevState.formVisibleOnPage
     })); // TOGGLES a boolean!
