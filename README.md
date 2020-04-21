@@ -68,7 +68,7 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
 
 * **Functional components** are literally functions that returns a React element. They can't store or alter state. We will mostly write functional components.
 
-* **Class components** are classes that extend React's Component class. They must always include a render() method that will return a React element. They are used when we need state.
+* **Class components** are classes that extend React's Component class. They **must** always include a `render()` method that will return a React element. _They are used when we need state._
 
 * **Nesting components** is a big part of developing with React. Components can be parents, siblings, children or any combination thereof.
 
@@ -113,6 +113,8 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
 * For instance, in our help queue, each time we add a new ticket, we need to update the application's state to hold the new ticket. Likewise, we'd need to update the application's state to edit or delete a ticket.
 
 * **Local State** - lives in a _single_ component and is never used in other components.
+
+  * Conditional rendering is a great example of local state and it's very common in dynamic applications. **Conditional rendering** - using a conditional to determine what content should be rendered. 
 
 * **Shared State** - is shared by _multiple_ components and can get complicated very quickly.
 
