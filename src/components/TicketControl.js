@@ -11,18 +11,30 @@ class TicketControl extends React.Component {
     }; // this is our DEFAULT STATE
   }
 
+  handleClick = () => {
+    this.setState(prevState => ({
+      formVisibleOnPage: !prevState.formVisibleOnPage
+    })); // TOGGLES a boolean!
+  }
+
   // Because this is the first class component we are building, a quick refresher: class components always need to have a render() method. 
   // Note that this code is just JavaScript, not JSX. We can use plain old JavaScript outside of our return() statement. We only need to use JSX and curly braces for evaluation inside our return().
   render(){
     let currentlyVisibleState = null;
+    let buttonText = null;
     if (this.state.formVisibleOnPage) {
       currentlyVisibleState = <NewTicketForm />
+      buttonText = "Return to Ticket List";
     } else {
       currentlyVisibleState = <TicketList />
+      buttonText = "Add Ticket";
     }
     return(
       <React.Fragment>
         {currentlyVisibleState}
+    <button onClick={this.handleClick}>{buttonText}</button>
+      {/* But what is `this`? In this case, we are going to be rendering an object that's an instance of the TicketControl component. this refers to the specific instance that is being rendered.
+      Note that we don't use this with functional components - just class components.  */}
       </React.Fragment>
     );
   }

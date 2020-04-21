@@ -124,7 +124,21 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
 
 * **Always use the `setState()` (an async) method to update state in a pure React application** so that the component will re-render (basically, let React does its job!)
 
+  * `setState()` can optionally take two arguments. This is the actual first argument that `setState()` can take:
+  
+  `````
+  (state, props) => stateChange
+  `````
 
+  * We can choose to just pass in an object (the stateChange), but we can also pass in an arrow function that takes the current state and props as arguments.
+
+* There are plenty of use cases where we need to know about the current state. Here are some examples:
+
+  * _We want to toggle a boolean._ That means we need to know the current state of the boolean so we can toggle it to its opposite state.
+
+  * _We want to increment or decrement a value._ A prime example is a counter that we need to increment by one or some other value each time a button is clicked.
+
+  * _We want to update the state of a game._ Let's say we are making a game where the location of pieces is constantly changing. We need to know the previous state to determine where pieces can move next.
 
 
 <details>
