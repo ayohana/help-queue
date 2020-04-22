@@ -140,6 +140,28 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
 
   * _We want to update the state of a game._ Let's say we are making a game where the location of pieces is constantly changing. We need to know the previous state to determine where pieces can move next.
 
+### Unidirectional Data Flow
+
+* Unidirectional data flow is a language-agnostic term for applications that have data flowing in only one direction.
+
+* In the case of React applications, data can only flow from a parent component down to a child component.
+
+* **It's the job of parent components to keep track of their children, not the other way around.**
+
+* The same is true with props. We can only pass props down from a parent component to a child component.
+
+* So if data can only be passed _down_, then how can we get information from a child component up to a parent component?
+
+  * The answer: we need to use **callbacks**. Here's how it works:
+    1. We define a method in a parent component that has state.
+    2. The parent component passes this method into the child component as a prop. Functions can be props just like any other data type.
+    3. We will add this method to a function in our child component in the form of a callback.
+    4. When the child executes the function that contains the parent component's callback, the method in the parent component is invoked. Because the callback resides in the parent component, the parent component can access any data that's passed into it. This works similarly to a closure.
+  
+  * This may feel like we're breaking the rules of unidirectional data flow because the parent component can access information from the callback executed in the child component. However, that's not the case. The parent component passes props down using unidirectional data flow. If a function is passed downward as a prop, the parent can still access it.
+
+  * It's common practice to _prefix_ the name of an _event handler function_ with `handle`. Any _props_ containing that function will be _prefixed_ with `on`. This is because the prop will be used when the event occurs, but the function itself is what actually handles the necessary actions. It also ensures the names are similar enough to easily determine which props and functions correspond, yet different enough to determine when we're referencing a function and when we're referencing a prop containing a function.
+
 
 <details>
 
