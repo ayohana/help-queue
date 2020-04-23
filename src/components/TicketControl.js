@@ -41,6 +41,12 @@ class TicketControl extends React.Component {
     this.setState({selectedTicket: selectedTicket});
   }
 
+  handleDeletingTicket = (id) => {
+    const newMasterTicketList = this.state.masterTicketList.filter(ticket => ticket.id !== id); // we want to filter out all tickets that does not have the ticket ID that will be passed into the method
+    this.setState({masterTicketList: newMasterTicketList});
+    this.setState({selectedTicket: null});
+  }
+
   // Because this is the first class component we are building, a quick refresher: class components always need to have a render() method. 
   // Note that this code is just JavaScript, not JSX. We can use plain old JavaScript outside of our return() statement. We only need to use JSX and curly braces for evaluation inside our return().
   // It's common practice to prefix the name of an event handler function with `handle`. Any props containing that function will be prefixed with `on`. This is because the prop will be used when the event occurs, but the function itself is what actually handles the necessary actions. It also ensures the names are similar enough to easily determine which props and functions correspond, yet different enough to determine when we're referencing a function and when we're referencing a prop containing a function.
@@ -49,7 +55,7 @@ class TicketControl extends React.Component {
     let buttonText = null;
 
     if (this.state.selectedTicket != null) {
-      currentlyVisibleState = <TicketDetail ticket = {this.state.selectedTicket} />
+      currentlyVisibleState = <TicketDetail ticket={this.state.selectedTicket} onClickingDelete={this.handleDeletingTicket} />
       buttonText = "Return to Ticket List";
     } else if (this.state.formVisibleOnPage) {
       currentlyVisibleState = <NewTicketForm onNewTicketCreation={this.handleAddingNewTicketToList}/>
