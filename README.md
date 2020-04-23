@@ -6,21 +6,25 @@
 
 #### By **Adela Darmansyah**
 
-[Sample Component Diagram](#Sample-Component-Diagram) | [Notes](#Notes)
+[Sample Component Diagrams](#Sample-Component-Diagram) | [Notes](#Notes)
 
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/ayohana/help-queue/master?color=%23DE98B2&style=for-the-badge) ![GitHub language count](https://img.shields.io/github/languages/count/ayohana/help-queue?color=%23DE98B2&style=for-the-badge) ![GitHub top language](https://img.shields.io/github/languages/top/ayohana/help-queue?color=%23DE98B2&style=for-the-badge)
 
 </div>
 
-## Sample Component Diagram
+## Sample Component Diagrams
 
 Initial component diagram:
 
-![Component Diagram](./public/sample-component-diagram.jpg)
+![Initial Component Diagram](./public/sample-component-diagram.jpg)
 
 Version 2.0:
 
 ![Component Diagram Version 2.0](./public/sample-component-diagram-2.jpg)
+
+Version 3.0:
+
+![Component Diagram Version 3.0](./public/sample-component-diagram-3.jpg)
 
 ## Notes
 
@@ -87,6 +91,8 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
 * React components accept properties (known as **props**) passed down from a parent. Because React components are functions, these props are actually just a special kind of argument.
 
 * **Props Are Read-Only.** React components aren't just functions - they are _pure functions_. As we know from our functional programming week, pure functions don't have side effects and don't alter state. We need to follow these same rules when we are working with props. We will **never alter the value of props** because this would alter the state of our application and break a cardinal rule of pure functions: no side effects. For that reason, it's very important to remember that **props are read-only.**
+
+* **Avoid props drilling!** The more components that have to pass down props, the more places our application could break down.
 
 ### Suggested Guidelines when using CSS
 
