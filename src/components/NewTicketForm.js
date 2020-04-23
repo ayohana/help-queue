@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReusableForm from "./ReusableForm";
 import { v4 } from 'uuid';
 // v4 refers to the method in the UUID library responsible for creating (random) unique IDs.
 // There are a few available methods: For instance, v1() creates an ID based on timestamp while v5() uses the object's namespace to generate an ID.
@@ -23,27 +24,7 @@ function NewTicketForm(props){
 
   return(
     <React.Fragment>
-      <h3>This is a form</h3>
-      <form onSubmit={handleNewTicketFormSubmission}>
-        <input
-          type='text'
-          name='names'
-          placeholder='Pair Names'
-        />
-        <br />
-        <input 
-          type='text'
-          name='location'
-          placeholder='location'
-        />
-        <br />
-        <textarea 
-          name='issue'
-          placeholder='Describe your issue.'
-        />
-        <br />
-        <button type='submit'>Help!</button>
-      </form>
+      <ReusableForm formSubmissionHandler={handleNewTicketFormSubmission} buttonText="Help!" />
     </React.Fragment>
   );
 }
