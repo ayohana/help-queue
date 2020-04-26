@@ -6,7 +6,7 @@
 
 #### By **Adela Darmansyah**
 
-[Sample Component Diagrams](#Sample-Component-Diagram) | [Notes on React](#Notes-on-React) | [Notes on Redux](#Notes-on-Redux)
+[Sample Component Diagrams](#Sample-Component-Diagram) | [Notes on React](#Notes-on-React) | [Notes on Redux](#Notes-on-Redux) | [React-Redux](#React-Redux)
 
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/ayohana/help-queue/master?color=%23DE98B2&style=for-the-badge) ![GitHub language count](https://img.shields.io/github/languages/count/ayohana/help-queue?color=%23DE98B2&style=for-the-badge) ![GitHub top language](https://img.shields.io/github/languages/top/ayohana/help-queue?color=%23DE98B2&style=for-the-badge)
 
@@ -176,6 +176,10 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
 
 * Note that `create-react-app` does not come with Redux. This makes sense - Redux is a separate state management library and smaller React applications won't need it.
 
+* From the very beginning, Redux doc stresses that _Redux has no relation to React_. You can write Redux apps with React, Angular, Ember, jQuery, or vanilla JavaScript.
+
+* That said, Redux works especially well with libraries like React and Deku because they let you describe UI as a function of state, and Redux emits state updates in response to actions.
+
 ### Three Principles of Redux:
 
 1. **Single Source of Truth**
@@ -230,39 +234,66 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
 
 * **There should only be a single store in a Redux app**, as the composition happens on the reducer level.
 
-  * `getState()` 
-    * Returns the _current_ `state tree` of the `store`.
-    * It is equal to the last value returned by the store's reducer.
-    * Returns:
-      * (any): The current state tree of your application.
+* `createStore(reducer, preloadedState)`
+  * A **store creator** is a function that creates a Redux store.
+  * Takes in 1-2 Arguments:
+    1. `reducer` (Function)
+    2. `preloadedState`
 
-  * `dispatch(action)`
-    * Dispatches an action. This is the only way to trigger a state change.
-    * Takes in 1 Argument:
-      1. `action` (Object):  A _plain object_ describing the change that makes sense for your application.
-    * Returns:
-      * (Object): The dispatched action.
+* `getState()` 
+  * Gets the current state of the store.
+  * Per Redux doc: Returns the _current_ `state tree` of the `store`.
+  * It is equal to the last value returned by the store's reducer.
+  * Returns:
+    * (any): The current state tree of your application.
 
-  * `subscribe(listener)`
-    * Registers a function to be called on state changes.
-    * In other words, it _adds a change listener_.
-    * Takes in 1 Argument:
-      1. `listener` (Function): The _callback_ to be invoked any time an action has been dispatched, and the state tree might have changed. You may call `getState()` inside this callback to read the current state tree.
-    * Returns:
-      * (Function): A function that unsubscribes the change listener.
+* `dispatch(action)`
+  * Sends an action to the store.
+  * Per Redux doc: Dispatches an action. This is the only way to trigger a state change.
+  * Takes in 1 Argument:
+    1. `action` (Object):  A _plain object_ describing the change that makes sense for your application.
+  * Returns:
+    * (Object): The dispatched action.
 
-  * `replaceReducer(nextReducer)`
-    * Replaces the reducer currently used by the store to calculate the state.
-    * It is an advanced API. It can be used to implement hot reloading and code splitting. _Most likely you won't use it._
+* `subscribe(listener)`
+  * To add change listeners to the store.
+  * Per Redux doc: Registers a function to be called on state changes.
+  * In other words, it _adds a change listener_.
+  * Takes in 1 Argument:
+    1. `listener` (Function): The _callback_ to be invoked any time an action has been dispatched, and the state tree might have changed. You may call `getState()` inside this callback to read the current state tree.
+  * Returns:
+    * (Function): A function that unsubscribes the change listener.
+
+* `unsubscribe()`
+  * To stop change listeners listening to changes.
+  * Per Redux doc: To unsubscribe the change listener, invoke the function returned by `subscribe()`. Example:
+    > ````
+    > const unsubscribe = store.subscribe(doThisHandlerWhenAChangeHappens)
+    > unsubscribe()
+    > ````
+  * Returns:
+    * (Function): A function that unsubscribes the change listener.
+
+* `replaceReducer(nextReducer)`
+  * Per Redux doc: Replaces the reducer currently used by the store to calculate the state.
+  * It is an advanced API. It can be used to implement hot reloading and code splitting. _Most likely you won't use it._
 
 #### Reducers
 
 * **Reducers** (aka **reducing functions**) are just pure functions that take the previous state and an action, and return the next state.
+
+* The **parameters** of a reducer generally look something like this:
+    > ````
+    > (state = {}, action)
+    > ````
+
+* All a reducer cares about is taking a thing, applying an action to a copy of that thing, and then returning the altered copy. It doesn't know anything else about our application such as how state will be stored or applied in the UI. **Never use a reducer for side effects!**
+
+* Per Redux documentation: A reducer (also called a reducing function) is a function that **accepts an accumulation and a value** and **returns a new accumulation**. They are used _to reduce a collection of values down to a single value_.
+
     > ````
     > type Reducer<S, A> = (state: S, action: A) => S
     > ````
-
-* Per Redux documentation: A reducer (also called a reducing function) is a function that **accepts an accumulation and a value** and **returns a new accumulation**. They are used _to reduce a collection of values down to a single value_.
 
 * A Redux reducer is similar to JavaScript's built-in API for reducting: `Array.prototype.reduce()`. Therefore reducers are not unique to Redux.
 
@@ -285,6 +316,52 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
 * Actions are objects that describe something that happened. They're _dispatched_ to the Redux store and handled by _reducers_. The reducer receives the action and executes logic based on the action's _type_ that alters state. Data included with the action is called a **payload**.
 
 * Naming convention for Redux Actions: capitalize actions and separate words with an underscore.
+
+## React Redux
+
+* Add `Redux` and `React Redux` bindings to your project by running the following command:
+  > `npm install redux@4.0.5 react-redux@7.1.3`
+
+### Features and Functionality
+
+* The `<Provider>` component
+* The `connect()` function
+* The `dispatch()` function
+* The `mapStateToProps()` function
+
+#### `<Provider>` Component
+
+* The `<Provider />` makes the Redux store available to any nested components that have been wrapped in the `connect()` function.
+
+* Since any React component in a React Redux app can be connected, most applications will render a `<Provider>` at the top level, with the entire app’s component tree inside of it.
+
+* Normally, you can’t use a connected component unless it is nested inside of a `<Provider>`.
+
+#### `connect()`
+
+* The `connect()` function connects a React component to a Redux store.
+
+* Acts as an intermediary between a component and the store.
+
+* Accepts 4 Parameters:
+  1. mapStateToProps?: Function
+  2. mapDispatchToProps?: Function | Object
+  3. mergeProps?: Function
+  4. options?: Object
+
+* `mapStateToProps(state, ownProps)`
+
+    > `````
+    > mapStateToProps?: (state, ownProps?) => Object
+    > `````
+
+    * Up to 2 Parameters:
+      1. `state`: Object
+      2. `ownProps?`: Object
+    
+    * Returns:
+      * An object.
+      * This object, normally referred to as `stateProps`, will be merged as props to your connected component.
 
 <details>
 
