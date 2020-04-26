@@ -50,11 +50,37 @@ describe('ticketListReducer', () => {
     });
   });
 
+  test('Should successfully update a ticket data using ADD_TICKET action', () => {
+    action = {
+      type: 'ADD_TICKET',
+      names: "Bob and Amy",
+      location: "E1",
+      issue: "Help!",
+      id: 1
+    };
+
+    expect(ticketListReducer(currentState, action)).toEqual({
+      1: {
+        names: "Bob and Amy",
+        location: "E1",
+        issue: "Help!",
+        id: 1
+      },
+      2: {
+        names: 'Jasmine and Justine',
+        location: '2a',
+        issue: 'Reducer has side effects.',
+        id: 2 
+      }
+    });
+  });
+
   test('Should successfully delete a ticket', () => {
     action = {
       type: 'DELETE_TICKET',
       id: 1
     };
+
     expect(ticketListReducer(currentState, action)).toEqual({
       2: {
         names: 'Jasmine and Justine',
