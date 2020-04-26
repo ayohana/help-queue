@@ -1,9 +1,10 @@
 export default (state = {}, action) => {
 
+  const { names, location, issue, id } = action;
+  
   switch (action.type) {
 
     case 'ADD_TICKET':
-      const { names, location, issue, id } = action;
       return Object.assign({}, state, {
         [id] : {
           names: names,
@@ -23,6 +24,11 @@ export default (state = {}, action) => {
       // The third argument is the change that should be made to our new copy. This will always be the new ticket that should be added to our ticket list state.
 
       // We return the value from Object.assign(). Our reducer hasn't altered anything. Instead, it made a copy of the state that was passed in as argument, altered the copy, and then returned the altered copy so it can be used elsewhere in our code.
+
+    case 'DELETE_TICKET':
+      const newState = { ...state };
+      delete newState[id];
+      return newState;
 
     default:
       return state;

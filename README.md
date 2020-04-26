@@ -176,7 +176,7 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
 
 * Note that `create-react-app` does not come with Redux. This makes sense - Redux is a separate state management library and smaller React applications won't need it.
 
-## Three Principles of Redux:
+### Three Principles of Redux:
 
 1. **Single Source of Truth**
     
