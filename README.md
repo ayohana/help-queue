@@ -2,11 +2,11 @@
 
 # Help Queue
 
-#### React Fundamentals Exercise for [Epicodus](https://www.epicodus.com/), 04.20.2020
+#### React Fundamentals & Redux Exercise for [Epicodus](https://www.epicodus.com/), 04.20.2020 - 04.26.2020
 
 #### By **Adela Darmansyah**
 
-[Sample Component Diagrams](#Sample-Component-Diagram) | [Notes](#Notes)
+[Sample Component Diagrams](#Sample-Component-Diagram) | [Notes on React](#Notes-on-React) | [Notes on Redux](#Notes-on-Redux)
 
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/ayohana/help-queue/master?color=%23DE98B2&style=for-the-badge) ![GitHub language count](https://img.shields.io/github/languages/count/ayohana/help-queue?color=%23DE98B2&style=for-the-badge) ![GitHub top language](https://img.shields.io/github/languages/top/ayohana/help-queue?color=%23DE98B2&style=for-the-badge)
 
@@ -26,7 +26,7 @@ Version 3.0:
 
 ![Component Diagram Version 3.0](./public/sample-component-diagram-3.jpg)
 
-## Notes
+## Notes on React
 
 ### What is React?
 
@@ -168,6 +168,121 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
 
   * It's common practice to _prefix_ the name of an _event handler function_ with `handle`. Any _props_ containing that function will be _prefixed_ with `on`. This is because the prop will be used when the event occurs, but the function itself is what actually handles the necessary actions. It also ensures the names are similar enough to easily determine which props and functions correspond, yet different enough to determine when we're referencing a function and when we're referencing a prop containing a function.
 
+## Notes on Redux
+
+### What is Redux?
+
+* **Redux** is a library that we can use to manage shared state in React applications. Their goal is to simplify managing complex state.
+
+* Note that `create-react-app` does not come with Redux. This makes sense - Redux is a separate state management library and smaller React applications won't need it.
+
+## Three Principles of Redux:
+
+1. **Single Source of Truth**
+    
+    * The `state` of your whole application is stored in an `object tree` within a single `store`.
+
+    * An **object tree** (aka **state tree**) is _a big object_ that can contain multiple `state slices`.
+
+    * A **store** is an _object_ that holds the application's state tree. The store acts as the **"single source of truth"** for the whole app. There should only be a single store in a Redux app, as the composition happens on the reducer level.
+
+    * `getState()` returns the _current_ state of the store.
+
+    * Benefits:
+
+      * Easy to create universal apps, as the state from your server can be serialized and hydrated into the client with no extra coding effort.
+
+      * Easier to debug or inspect an application because of the single state tree.
+
+      * Faster development cycle also due to the single state tree.
+
+2. **State is Read-Only**
+    
+    * **We cannot modify state directly.**
+
+    * The only way to change the state is to emit an `action`, an object describing what happened.
+
+    * An **action** is a plain object that represents an intention to change the state. Actions are the only way to get data into the store.
+
+      * _We won't use `setState()` to update state with Redux._
+
+    * Benefits:
+    
+      * Ensures that neither the views nor the network callbacks will ever write directly to the state. Instead, they express an intent to transform the state.
+
+      * Because all changes are centralized and happen one by one in a strict order, there are no subtle race conditions to watch out for.
+      
+      * As actions are just plain objects, they can be logged, serialized, stored, and later replayed for debugging or testing purposes.
+
+3. **Changes are Made with Pure Functions**
+    
+    * To specify how the state tree is transformed by actions, you write _pure_ `reducers`.
+    
+    * **Reducers** (aka **reducing functions**) are just pure functions that take the previous state and an action, and return the next state.
+
+### Anatomy of Redux
+
+#### Stores
+
+* A **store** is an _object_ that holds the application's `state tree`.
+
+* The store acts as the **"single source of truth"** for the whole app.
+
+* **There should only be a single store in a Redux app**, as the composition happens on the reducer level.
+
+  * `getState()` 
+    * Returns the _current_ `state tree` of the `store`.
+    * It is equal to the last value returned by the store's reducer.
+    * Returns:
+      * (any): The current state tree of your application.
+
+  * `dispatch(action)`
+    * Dispatches an action. This is the only way to trigger a state change.
+    * Takes in 1 Argument:
+      1. `action` (Object):  A _plain object_ describing the change that makes sense for your application.
+    * Returns:
+      * (Object): The dispatched action.
+
+  * `subscribe(listener)`
+    * Registers a function to be called on state changes.
+    * In other words, it _adds a change listener_.
+    * Takes in 1 Argument:
+      1. `listener` (Function): The _callback_ to be invoked any time an action has been dispatched, and the state tree might have changed. You may call `getState()` inside this callback to read the current state tree.
+    * Returns:
+      * (Function): A function that unsubscribes the change listener.
+
+  * `replaceReducer(nextReducer)`
+    * Replaces the reducer currently used by the store to calculate the state.
+    * It is an advanced API. It can be used to implement hot reloading and code splitting. _Most likely you won't use it._
+
+#### Reducers
+
+* **Reducers** (aka **reducing functions**) are just pure functions that take the previous state and an action, and return the next state.
+    > ````
+    > type Reducer<S, A> = (state: S, action: A) => S
+    > ````
+
+* Per Redux documentation: A reducer (also called a reducing function) is a function that **accepts an accumulation and a value** and **returns a new accumulation**. They are used _to reduce a collection of values down to a single value_.
+
+* A Redux reducer is similar to JavaScript's built-in API for reducting: `Array.prototype.reduce()`. Therefore reducers are not unique to Redux.
+
+* In Redux, **the accumulated value is the `state object`**, and **the values being accumulated are `actions`**.
+
+* _Reducers calculate a new state given the previous state and an action._ **They must be pure functions—functions** that return the exact same output for given inputs and to be free of side-effects. This is what enables exciting features like hot reloading and time travel.
+
+* _**Do not put API calls into reducers!**_
+
+#### Actions
+
+* An **action** is a _plain object_ that represents an _intention_ to change the state.
+
+* **Actions are the only way to get data into the store.**
+
+* _We won't use `setState()` to update state with Redux._
+
+* Any data, whether from UI events, network callbacks, or other sources such as WebSockets needs to eventually be dispatched as actions.
+
+* Actions are objects that describe something that happened. They're _dispatched_ to the Redux store and handled by _reducers_. The reducer receives the action and executes logic based on the action's _type_ that alters state. Data included with the action is called a **payload**.
 
 <details>
 
