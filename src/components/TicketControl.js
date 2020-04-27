@@ -3,14 +3,16 @@ import NewTicketForm from './NewTicketForm';
 import TicketList from './TicketList';
 import TicketDetail from './TicketDetail';
 import EditTicketForm from './EditTicketForm';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class TicketControl extends React.Component {
   
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = { // our DEFAULT STATE
       formVisibleOnPage: false, // a local state
-      masterTicketList: [], // a shared state
       selectedTicket: null,
       editing: false
       // Each of these properties is a state slice. A state slice is a piece of state that can be mutated independently of other state slices.
@@ -33,21 +35,32 @@ class TicketControl extends React.Component {
   }
 
   handleAddingNewTicketToList = (newTicket) => {
-    const newMasterTicketList = this.state.masterTicketList.concat(newTicket);
-    this.setState({masterTicketList: newMasterTicketList});
+    const { dispatch } = this.props;
+    const { id, names, location, issue } = newTicket;
+    const action = {
+      type: 'ADD_TICKET',
+      id: id,
+      names: names,
+      location: location,
+      issue: issue,
+    }
+    dispatch(action);
     this.setState({formVisibleOnPage: false});
   }
-  // Unlike push(), which directly alters the array its called on, concat() makes a copy of that array. 
 
   handleChangingSelectedTicket = (id) => {
-    const selectedTicket = this.state.masterTicketList.filter(ticket => ticket.id === id)[0];
+    const selectedTicket = this.props.masterTicketList[id];
     this.setState({selectedTicket: selectedTicket});
   }
 
   handleDeletingTicket = (id) => {
-    const newMasterTicketList = this.state.masterTicketList.filter(ticket => ticket.id !== id); // we want to filter out all tickets that does not have the ticket ID that will be passed into the method
-    this.setState({masterTicketList: newMasterTicketList});
-    this.setState({selectedTicket: null});
+    const { dispatch } = this.props;
+    const action = {
+      type: 'DELETE_TICKET',
+      id: id
+    }
+    dispatch(action);
+    this.setState({ selectedTicket: null });
   }
 
   handleEditClick = () => {
@@ -56,13 +69,20 @@ class TicketControl extends React.Component {
   }
 
   handleEditingTicketInList = (ticketToEdit) => {
-    const editedMasterTicketList = this.state.masterTicketList
-      .filter(ticket => ticket.id !== this.state.selectedTicket.id)
-      .concat(ticketToEdit);
-      // We filter the previous version of the ticket out of the list with filter() and then add the the edited version of the ticket to the list with concat(). 
-    this.setState({masterTicketList: editedMasterTicketList});
-    this.setState({editing: false});
-    this.setState({selectedTicket: null});
+    const { dispatch } = this.props;
+    const { id, names, location, issue } = ticketToEdit;
+    const action = {
+      type: 'ADD_TICKET',
+      id: id,
+      names: names,
+      location: location,
+      issue: issue
+    };
+    dispatch(action);
+    this.setState({
+      editing: false,
+      selectedTicket: null
+    });
   }
 
   // Because this is the first class component we are building, a quick refresher: class components always need to have a render() method. 
@@ -86,7 +106,7 @@ class TicketControl extends React.Component {
       currentlyVisibleState = <NewTicketForm onNewTicketCreation={this.handleAddingNewTicketToList}/>
       buttonText = "Return to Ticket List";
     } else {
-      currentlyVisibleState = <TicketList ticketList={this.state.masterTicketList} onTicketSelection={this.handleChangingSelectedTicket} />
+      currentlyVisibleState = <TicketList ticketList={this.props.masterTicketList} onTicketSelection={this.handleChangingSelectedTicket} />
       // Because a user will actually be clicking on the ticket in the Ticket component, we will need to pass our new handleChangingSelectedTicket method as a prop.
       buttonText = "Add Ticket";
     }
@@ -100,5 +120,21 @@ class TicketControl extends React.Component {
     );
   }
 }
+
+TicketControl.propTypes = {
+  masterTicketList: PropTypes.object
+};
+
+const mapStateToProps = state => {
+  return {
+    masterTicketList: state
+  }
+}
+
+TicketControl = connect(mapStateToProps)(TicketControl);
+// The connect() function redefines our entire NewTicketForm component as a new NewTicketForm component with additional functionality included.
+// The return value of the connect() function is the TicketControl component itself, but this time we will have powerful new tools at our disposal: the dispatch() and mapStateToProps() functions.
+
+// Note that it's important that connect() is called right before we export NewTicketForm. That ensures that the component that's exported has all necessary React Redux functionality.
 
 export default TicketControl;

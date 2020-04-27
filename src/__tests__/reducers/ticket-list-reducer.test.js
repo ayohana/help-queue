@@ -3,6 +3,7 @@ import ticketListReducer from '../../reducers/ticket-list-reducer';
 describe('ticketListReducer', () => {
 
   let action;
+  
   const ticketData = {
     names: 'Ryan & Aimen',
     location: '4b',

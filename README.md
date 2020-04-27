@@ -333,7 +333,9 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
 
 * The `<Provider />` makes the Redux store available to any nested components that have been wrapped in the `connect()` function.
 
-* Since any React component in a React Redux app can be connected, most applications will render a `<Provider>` at the top level, with the entire app’s component tree inside of it.
+* In other words, **the `<Provider>` component will give all of its child components access to the `connect()` function**, which is needed to connect to the Redux store.
+
+* Since any React component in a React Redux app can be connected, most applications will render a `<Provider>`_at the top level_, with the entire app’s component tree inside of it.
 
 * Normally, you can’t use a connected component unless it is nested inside of a `<Provider>`.
 
@@ -343,16 +345,28 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
 
 * Acts as an intermediary between a component and the store.
 
-* Accepts 4 Parameters:
+* A **higher-order component** - a function that takes an existing component, wraps it with additional functionality, and then returns it so it can be used elsewhere in an application. In other words, **a HOC takes a component and returns a new component.**
+
+* It provides its connected component with the pieces of the data it needs from the store, and the functions it can use to dispatch actions to the store.
+
+* It does not modify the component class passed to it; instead, it returns a new, connected component class that wraps the component you passed in.
+
+* Optional Parameters:
   1. mapStateToProps?: Function
   2. mapDispatchToProps?: Function | Object
   3. mergeProps?: Function
   4. options?: Object
 
-* `mapStateToProps(state, ownProps)`
+* `mapStateToProps(state)`
+
+    * This function takes a state slice from the store and then maps it to a prop in the component.
 
     > `````
-    > mapStateToProps?: (state, ownProps?) => Object
+    > const mapStateToProps = state => {
+    >   return {
+    >     // Key-value pairs of state to be mapped from Redux to React component go here.
+    >   }
+    > }
     > `````
 
     * Up to 2 Parameters:
