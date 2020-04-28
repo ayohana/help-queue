@@ -341,9 +341,9 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
 
 #### `connect()`
 
-* The `connect()` function connects a React component to a Redux store.
+* The `connect()` function **connects a _React_ component to a _Redux_ store.**
 
-* Acts as an intermediary between a component and the store.
+* Acts as an intermediary between a REACT component and the REDUX store.
 
 * A **higher-order component** - a function that takes an existing component, wraps it with additional functionality, and then returns it so it can be used elsewhere in an application. In other words, **a HOC takes a component and returns a new component.**
 
@@ -359,7 +359,7 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
 
 * `mapStateToProps(state)`
 
-    * This function takes a state slice from the store and then maps it to a prop in the component.
+    * This function takes a state slice from the REDUX store and then maps it to a prop in the REACT component.
 
     > `````
     > const mapStateToProps = state => {
