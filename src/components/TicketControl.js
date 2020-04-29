@@ -12,7 +12,7 @@ class TicketControl extends React.Component {
     super(props);
     console.log(props);
     this.state = { // our DEFAULT STATE
-      formVisibleOnPage: false, // a local state
+      // formVisibleOnPage: false, // a local state
       selectedTicket: null,
       editing: false
       // Each of these properties is a state slice. A state slice is a piece of state that can be mutated independently of other state slices.
@@ -28,9 +28,11 @@ class TicketControl extends React.Component {
         editing: false
       });
     } else {
-      this.setState(prevState => ({
-        formVisibleOnPage: !prevState.formVisibleOnPage
-      })); // toggles a boolean
+      const { dispatch } = this.props;
+      const action = {
+        type: 'TOGGLE_FORM'
+      }
+      dispatch(action);
     }
   }
 
@@ -45,7 +47,10 @@ class TicketControl extends React.Component {
       issue: issue,
     }
     dispatch(action);
-    this.setState({formVisibleOnPage: false});
+    const action2 = {
+      type: 'TOGGLE_FORM'
+    }
+    dispatch(action2);
   }
 
   handleChangingSelectedTicket = (id) => {
@@ -102,7 +107,7 @@ class TicketControl extends React.Component {
         onClickingEdit={this.handleEditClick}
       />
       buttonText = "Return to Ticket List";
-    } else if (this.state.formVisibleOnPage) {
+    } else if (this.props.formVisibleOnPage) {
       currentlyVisibleState = <NewTicketForm onNewTicketCreation={this.handleAddingNewTicketToList}/>
       buttonText = "Return to Ticket List";
     } else {
@@ -127,7 +132,8 @@ TicketControl.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    masterTicketList: state
+    masterTicketList: state.masterTicketList,
+    formVisibleOnPage: state.formVisibleOnPage
   }
 }
 
