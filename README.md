@@ -6,7 +6,7 @@
 
 #### By **Adela Darmansyah**
 
-[Sample Component Diagrams](#Sample-Component-Diagram) | [Notes on React](#Notes-on-React) | [Notes on Redux](#Notes-on-Redux) | [React-Redux](#React-Redux)
+[Sample Component Diagrams](#Sample-Component-Diagram) | [Notes on React](#Notes-on-React) | [Notes on Redux](#Notes-on-Redux) | [React-Redux](#React-Redux) | [Testing with Jest](#Testing-with-Jest)
 
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/ayohana/help-queue/master?color=%23DE98B2&style=for-the-badge) ![GitHub language count](https://img.shields.io/github/languages/count/ayohana/help-queue?color=%23DE98B2&style=for-the-badge) ![GitHub top language](https://img.shields.io/github/languages/top/ayohana/help-queue?color=%23DE98B2&style=for-the-badge)
 
@@ -303,6 +303,23 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
 
 * _**Do not put API calls into reducers!**_
 
+* `combineReducers(reducers)`
+
+  * A **Root Reducer** handles the work of combining our application's reducers.
+
+  *  **The state produced by `combineReducers()` namespaces the states of each reducer under their keys as passed to `combineReducers()`**
+
+  * Arguments:
+
+    1. `reducers` (Object): An object whose values correspond to different reducing functions that need to be combined into one. Any reducer passed to `combineReducers` must satisfy these rules:
+        * **For any _action that is not recognized_, it must return the state given to it as the first argument.**
+        * **It must never return undefined**. It is too easy to do this by mistake via an early return statement, so combineReducers throws if you do that instead of letting the error manifest itself somewhere else.
+        * **If the state given to it is undefined, it must return the initial state for this specific reducer.** According to the previous rule, the initial state must not be undefined either. It is handy to specify it with ES6 optional arguments syntax, but you can also explicitly check the first argument for being undefined.
+
+  * Returns:
+
+    * (Function): A **reducer** that invokes every reducer inside the reducers object, and constructs a state object with the same shape.
+
 #### Actions
 
 * An **action** is a _plain object_ that represents an _intention_ to change the state.
@@ -376,6 +393,12 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
     * Returns:
       * An object.
       * This object, normally referred to as `stateProps`, will be merged as props to your connected component.
+
+## Testing with Jest
+
+### Smoke Tests
+
+* A **smoke test** is just a simple test to ensure the basic functionality works. It isn't comprehensive testing, but it will get the job done.
 
 <details>
 
