@@ -6,7 +6,7 @@
 
 #### By **Adela Darmansyah**
 
-[Sample Component Diagrams](#Sample-Component-Diagram) | [Notes on React](#Notes-on-React) | [Notes on Redux](#Notes-on-Redux) | [React-Redux](#React-Redux) | [Testing with Jest](#Testing-with-Jest)
+[Sample Component Diagrams](#Sample-Component-Diagram) | [Notes on React](#Notes-on-React) | [Notes on Redux](#Notes-on-Redux) | [React-Redux](#React-Redux) | [Testing with Jest](#Testing-with-Jest) | [Component Life Cycle Methods](#Component-Life-Cycle-Methods)
 
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/ayohana/help-queue/master?color=%23DE98B2&style=for-the-badge) ![GitHub language count](https://img.shields.io/github/languages/count/ayohana/help-queue?color=%23DE98B2&style=for-the-badge) ![GitHub top language](https://img.shields.io/github/languages/top/ayohana/help-queue?color=%23DE98B2&style=for-the-badge)
 
@@ -399,6 +399,26 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
 ### Smoke Tests
 
 * A **smoke test** is just a simple test to ensure the basic functionality works. It isn't comprehensive testing, but it will get the job done.
+
+## Component Life Cycle Methods
+
+* **The React lifecycle** is _a series of methods_ that is always called in a certain order.
+
+* We can use these lifecycle methods to call our own methods _at a very specific time_ during a component's lifecycle.
+
+### The 3 Stages of React's Component LifeCycle:
+
+1. **Mounting** refers to the stages where a component is instantiated and then added to the DOM. It includes the following common lifecycle methods, which are called in order:
+    * `constructor()`: This is where we specify any properties the component should have such as local state.
+    * `render()`: The only lifecycle method that's required in a class component.
+    * `componentDidMount()`: Invoked after a component has finished inserting all DOM nodes. The React documentation recommends setting up subscriptions during this lifecycle method.
+
+2. **Updating** is a stage that can happen multiple times during a component's lifecycle. For example, this stage would occur each time a user increments a counter.
+    * `render()`: gets called again so that any DOM nodes that have changed can be refreshed.
+    * `componentDidUpdate()`: If we have a method that we want to call any time the component updates, we could do so here.
+
+3. **Unmounting** occurs when the component is being removed from the DOM. It only has one method:
+    * `componentWillUnmount()`: Can be used to perform any cleanup such as unsubscribing or canceling a timer.
 
 <details>
 

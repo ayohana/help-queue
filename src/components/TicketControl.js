@@ -20,6 +20,26 @@ class TicketControl extends React.Component {
     }; 
   }
 
+  componentDidMount() {
+    this.waitTimeUpdateTimer = setInterval(() =>
+      this.updateTicketElapsedWaitTime(),
+    1000
+    ); // interval delay is 1000 ms = 1 second
+  }
+
+  componentDidUpdate() { // triggered each time a change is made to the UI. The timer has no effect on it.
+    console.log("component updated!");
+  }
+
+  componentWillUnmount(){
+    console.log("component unmounted!");
+    clearInterval(this.waitTimeUpdateTimer);
+  }
+
+  updateTicketElapsedWaitTime = () => {
+    console.log("tick");
+  }
+
   // Because this method uses arrow notation, this is automatically bound to its current lexical scope, which is an instance of the class itself. (An ES6 feature)
   handleClick = () => {
     const { dispatch } = this.props;
