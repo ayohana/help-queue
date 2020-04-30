@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReusableForm from "./ReusableForm";
+import Moment from 'moment';
 import { v4 } from 'uuid';
 // v4 refers to the method in the UUID library responsible for creating (random) unique IDs.
 // There are a few available methods: For instance, v1() creates an ID based on timestamp while v5() uses the object's namespace to generate an ID.
@@ -14,7 +15,9 @@ function NewTicketForm(props){
       names: event.target.names.value,
       location: event.target.location.value,
       issue: event.target.issue.value,
-      id: v4() // creates a unique ID using UUID library
+      id: v4(), // creates a unique ID using UUID library
+      timeOpen: new Moment(),
+      formattedWaitTime: new Moment().fromNow(true) // set to the formatted elapsed time since the ticket was opened
     });
     // console.log(event.target.names.value);
     // console.log(event.target.location.value);
