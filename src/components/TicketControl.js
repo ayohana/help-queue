@@ -55,8 +55,9 @@ class TicketControl extends React.Component {
 
   handleAddingNewTicketToList = (newTicket) => {
     const { dispatch } = this.props;
-    const action1 = a.addTicket(newTicket);
-    dispatch(action1);
+    // const action1 = a.addTicket(newTicket);
+    // dispatch(action1);
+    // We no longer use addTicket action anymore because the Firestore reducer is handling that now.
     const action2 = a.toggleForm();
     dispatch(action2);
   }
@@ -78,15 +79,15 @@ class TicketControl extends React.Component {
     this.setState({editing: true});
   }
 
-  handleEditingTicketInList = (ticketToEdit) => {
-    const { dispatch } = this.props;
-    const action = a.addTicket(ticketToEdit);
-    dispatch(action);
-    this.setState({
-      editing: false,
-      selectedTicket: null
-    });
-  }
+  // handleEditingTicketInList = (ticketToEdit) => {
+  //   const { dispatch } = this.props;
+  //   const action = a.addTicket(ticketToEdit);
+  //   dispatch(action);
+  //   this.setState({
+  //     editing: false,
+  //     selectedTicket: null
+  //   });
+  // }
 
   // Because this is the first class component we are building, a quick refresher: class components always need to have a render() method. 
   // Note that this code is just JavaScript, not JSX. We can use plain old JavaScript outside of our return() statement. We only need to use JSX and curly braces for evaluation inside our return().

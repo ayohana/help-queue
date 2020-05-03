@@ -6,7 +6,7 @@
 
 #### By **Adela Darmansyah**
 
-[Sample Component Diagrams](#Sample-Component-Diagram) | [Notes on React](#Notes-on-React) | [Notes on Redux](#Notes-on-Redux) | [React-Redux](#React-Redux) | [Testing with Jest](#Testing-with-Jest) | [Component Life Cycle Methods](#Component-Life-Cycle-Methods) | [Notes on Firebase](#Notes-on-Firebase) | [About NoSQL](#About-NoSQL) | [ACID vs BASE](#ACID-vs-BASE) | [The CAP Theorem](#The-CAP-Theorem)
+[Sample Component Diagrams](#Sample-Component-Diagram) | [Notes on React](#Notes-on-React) | [Hooks](#Hooks) | [Notes on Redux](#Notes-on-Redux) | [React-Redux](#React-Redux) | [Testing with Jest](#Testing-with-Jest) | [Component Life Cycle Methods](#Component-Life-Cycle-Methods) | [Notes on Firebase](#Notes-on-Firebase) | [About NoSQL](#About-NoSQL) | [ACID vs BASE](#ACID-vs-BASE) | [The CAP Theorem](#The-CAP-Theorem)
 
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/ayohana/help-queue/master?color=%23DE98B2&style=for-the-badge) ![GitHub language count](https://img.shields.io/github/languages/count/ayohana/help-queue?color=%23DE98B2&style=for-the-badge) ![GitHub top language](https://img.shields.io/github/languages/top/ayohana/help-queue?color=%23DE98B2&style=for-the-badge)
 
@@ -167,6 +167,59 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
   * This may feel like we're breaking the rules of unidirectional data flow because the parent component can access information from the callback executed in the child component. However, that's not the case. The parent component passes props down using unidirectional data flow. If a function is passed downward as a prop, the parent can still access it.
 
   * It's common practice to _prefix_ the name of an _event handler function_ with `handle`. Any _props_ containing that function will be _prefixed_ with `on`. This is because the prop will be used when the event occurs, but the function itself is what actually handles the necessary actions. It also ensures the names are similar enough to easily determine which props and functions correspond, yet different enough to determine when we're referencing a function and when we're referencing a prop containing a function.
+
+## Hooks
+
+**Hooks** let you use state and other React features without writing a class. A hook is simply a way to "hook" a piece of state to a functional component.
+
+#### Basic React Hooks
+
+##### `useState()`
+
+> `````
+> const [state, setState] = useState(initialState);
+> `````
+
+* Returns:
+  1. A stateful value
+  2. A function to update #1
+
+* During the initial render, the returned state (`state`) is the same as the value passed as the first argument (`initialState`).
+
+* The `setState` function is used to update the state.
+    > `````
+    > setState(newState);
+    > `````
+    * Argument:
+        1. A new state value
+    * The function will then enqueue a re-render of the component.
+
+#### React Redux Firebase Hooks
+
+##### `useFireStoreConnect()`
+
+A React hook that automatically listens/unlistens to provided Cloud Firestore paths. Examples:
+
+> `````
+>  useFirestoreConnect('todos')
+>// sync todos collection from Firestore into redux
+> `````
+
+> `````
+> useFirestoreConnect([{
+>    collection: 'todos',
+>    doc: todoId
+>  }])
+> // use object as query
+> // doc: todoId specifies to listen to changes to a document with an id of todoId from the todos collection
+> `````
+
+Arguments:
+  1. `queriesConfigs` (object/string/array of object or string/function that returns object/string/array of object or string)
+
+Make sure the Cloud Firestore is imported including its reducer before attempting to use.
+
+
 
 ## Notes on Redux
 

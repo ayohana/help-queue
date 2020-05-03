@@ -6,17 +6,17 @@ export default (state = {}, action) => {
   
   switch (action.type) {
 
-    case 'ADD_TICKET':
-      return Object.assign({}, state, {
-        [id]: {
-          names: names,
-          location: location,
-          issue: issue,
-          id: id,
-          timeOpen: timeOpen,
-          formattedWaitTime: formattedWaitTime
-        }
-      });
+    // case 'ADD_TICKET':
+    //   return Object.assign({}, state, {
+    //     [id]: {
+    //       names: names,
+    //       location: location,
+    //       issue: issue,
+    //       id: id,
+    //       timeOpen: timeOpen,
+    //       formattedWaitTime: formattedWaitTime
+    //     }
+    //   });
       // We use Object.assign() to clone the state object.
       // Object.assign() must take three arguments:
         // 1st param — The target object to copy to.
