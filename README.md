@@ -6,7 +6,7 @@
 
 #### By **Adela Darmansyah**
 
-[Sample Component Diagrams](#Sample-Component-Diagram) | [Notes on React](#Notes-on-React) | [Notes on Redux](#Notes-on-Redux) | [React-Redux](#React-Redux) | [Testing with Jest](#Testing-with-Jest) | [Component Life Cycle Methods](#Component-Life-Cycle-Methods)
+[Sample Component Diagrams](#Sample-Component-Diagram) | [Notes on React](#Notes-on-React) | [Notes on Redux](#Notes-on-Redux) | [React-Redux](#React-Redux) | [Testing with Jest](#Testing-with-Jest) | [Component Life Cycle Methods](#Component-Life-Cycle-Methods) | [Notes on Firebase](#Notes-on-Firebase) | [About NoSQL](#About-NoSQL) | [ACID vs BASE](#ACID-vs-BASE) | [The CAP Theorem](#The-CAP-Theorem)
 
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/ayohana/help-queue/master?color=%23DE98B2&style=for-the-badge) ![GitHub language count](https://img.shields.io/github/languages/count/ayohana/help-queue?color=%23DE98B2&style=for-the-badge) ![GitHub top language](https://img.shields.io/github/languages/top/ayohana/help-queue?color=%23DE98B2&style=for-the-badge)
 
@@ -419,6 +419,101 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
 
 3. **Unmounting** occurs when the component is being removed from the DOM. It only has one method:
     * `componentWillUnmount()`: Can be used to perform any cleanup such as unsubscribing or canceling a timer.
+
+## Notes on Firebase
+
+* What is **Firebase**?
+  * A **realtime, cloud-based NoSQL database solution** offered by Google.
+  * **Cloud-based** means it exists online, or "in the cloud." 
+  * **Realtime** means we can see database changes immediately in our online dashboard.
+  * Firebase realtime database stores all data in a large JSON object. _Downside_: it's more difficult to query this database.
+  * Therefore we will use **Firebase as our BaaS and Firestore as our database solution.**
+    * **Firestore** is another realtime cloud-based database solution provided and recommended for users by Firebase.
+
+* A **BaaS** (**Backend-as-a-Service**). Other examples of BaaS:
+  * AWS
+  * Appcelerator
+  * Cloudmine
+  * Auth0
+  * Backendless
+
+* **Benefits of BaaS**:
+  * Decreased development time.
+  * Smaller learning curve.
+  * Scaleability. (In case our app became popular overnight, big services like Firebase/AWS are already designed to handle high traffic therefore experiencing less issues)
+  * Multiple features in one.
+
+* **Drawbacks of BaaS**:
+  * Lack of control. (If another service writes your back end, you can only make customizations the service allows)
+  * Cost.
+  * Stability. (You may risk losing your backend if a BaaS provider closes doors)
+
+## About NoSQL
+
+* NoSQL is designed to handle massive stores of data better than SQL so NoSQL is preferred in larger companies.
+
+### SQL vs. NoSQL:
+
+  | SQL | NoSQL |
+  | :-- | :---- |
+  | Relational	| Non-relational | 
+  | Uses a Schema | 	No Schema | 
+  | Uses SQL (structured query language) | Doesn't use a declarative query language | 
+  | Great for complex queries |	Not built for complex queries | 
+  | ACID approach |	BASE approach | 
+
+## ACID vs BASE
+
+### ACID
+
+* Transaction (a document is sent to a printer)
+* **Atomic** (prints an entire document or nothing at all)
+* **Consistent** (printer prints half page and the page gets stuck. The printer restarts itself and prints 2 pages with all content)
+* **Isolation** (while there were too many print outs in progress, the printer prints the right content of the document)
+* **Durable** (while printing, there was a power out. The printer again will print documents without any errors.)
+
+### BASE
+
+#### Basically Available (to new relationships)
+
+The system guarantees availability (in terms of the CAP theorem).
+
+#### Soft state (none of his relationships last very long)
+
+The state of the system may change over time, even without input. This is because of the eventual consistency model.
+
+#### Eventual consistency (one day he _will_ get married)
+
+The system will become consistent over time, given that the system does not receive input during that time.
+
+## The CAP Theorem
+
+The CAP theorem by Eric Brewer argues that a database system can use **at most** two of its three principles. For instance, in order to get both availability and partition tolerance (AP), you have you give up consistency (C).
+
+### Consistency
+
+Data is the same across the cluster so you can read/write from/to any node and get the same data.
+
+### Availability
+
+The ability to access the cluster even if a node in the cluster goes down.
+
+### Partition Tolerance
+
+The cluster continues to function even if there is a "partition" (communication break) between two nodes (both nodes are up but can't communicate).
+
+### All available combinations are:
+
+#### CA
+Data is consistent between all nodes - as long as all nodes are online - and you can read/write from any node and be sure that the data is the same. But if you ever develop a partition between nodes, the data will be out of sync (and won't re-sync once the partition is resolved).
+Note that CA systems don't practically exist (even if some systems claim to be so) - refer to stackoverflow.
+
+#### CP
+Data is consistent between all nodes, and maintains partition tolerance (preventing data desync) by becoming unavailable when a node goes down.
+
+#### AP
+Nodes remain online even if they can't communicate with each other and will resync data once the partition is resolved, but you aren't guaranteed that all nodes will have the same data (either during or after the partition).
+
 
 <details>
 
