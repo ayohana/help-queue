@@ -7,18 +7,32 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 // import reducer from './reducers/ticket-list-reducer';
 import rootReducer from './reducers/index';
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
+import { createFirestoreInstance } from 'redux-firestore';
+import firebase from "./firebase";
 
 const store = createStore(rootReducer);
 // Create the redux store with the rootReducer
 
-store.subscribe(() =>
-  console.log(store.getState())
-);
+const rrfProps = {
+  firebase,
+  config: {
+        userProfile: "users" // simply states that any data on users will be stored in a collection called "users"
+    },
+  dispatch: store.dispatch,
+  createFirestoreInstance
+}
+
+// store.subscribe(() =>
+//   console.log(store.getState())
+// );
 // Remember the subscribe() method that Redux provides? Generally, we won't use Redux's subscribe() or getState() in our "production" code, but it's excellent for testing. This is a great way to keep an eye on the current state of the store.
 
 ReactDOM.render(
-  <Provider store={store}> {/* pass in the Redux store as a prop of Provider component */}
-    <App />
+  <Provider store={store}> {/* provides the Redux store context */}
+    <ReactReduxFirebaseProvider {...rrfProps}> {/* provides Firebase and Firestore context */}
+      <App />
+    </ReactReduxFirebaseProvider>
   </Provider>,
   document.getElementById('root')
 );
