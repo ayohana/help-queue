@@ -83,9 +83,10 @@ class TicketControl extends React.Component {
   }
 
   handleDeletingTicket = (id) => {
-    const { dispatch } = this.props;
-    const action = a.deleteTicket(id);
-    dispatch(action);
+    this.props.firestore.delete({
+      collection: 'tickets', 
+      doc: id
+    });
     this.setState({selectedTicket: null});
   }
 

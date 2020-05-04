@@ -560,14 +560,7 @@ _Note:_ If there is no document at the location referenced by `docRef`, the resu
 You can also retrieve multiple documents with one request by querying documents in a collection. For example, you can use `where()` to query for all of the documents that meet a certain condition, then use `get()` to retrieve the results:
 
 > `````
-> db.collection("cities").where("capital", "==", true)
->     .get()
->     .then(
->       ...  
->     )
->     .catch(function(error) {
->         console.log("Error getting documents: ", error);
->     });
+> db.collection("cities").where("capital", "==", true).get()
 > `````
 
 In addition, you can retrieve _all_ documents in a collection by omitting the `where()` filter entirely.
@@ -584,6 +577,29 @@ To update some fields of a document without overwriting the entire document.
 >   capital: true
 > })
 > `````
+
+### Delete Functionality
+
+#### `delete()`
+
+To delete a document:
+
+> `````
+> db.collection("cities").doc("DC").delete();
+> `````
+
+To delete a specific field:
+
+> `````
+> var cityRef = db.collection('cities').doc('BJ');
+>
+> // Remove the 'capital' field from the document
+> var removeCapital = cityRef.update({
+>     capital: firebase.firestore.FieldValue.delete()
+> });
+> `````
+
+_Note_: Deleting collections from a Web client is not recommended.
 
 ## About NoSQL
 
