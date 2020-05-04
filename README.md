@@ -196,7 +196,27 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
 
 #### React Redux Firebase Hooks
 
-##### `useFireStoreConnect()`
+##### `useFirestore()`
+
+A React Hook that returns firestore object. Example:
+
+> `````
+>  const firestore = useFirestore()
+>   function addTodo() {
+>     const exampleTodo = { done: false, text: 'Sample' }
+>     return firestore.collection('todos').add(exampleTodo)
+>   }
+> `````
+
+Returns: (Object) an extended Firestore instance
+
+##### `useFirestoreConnect()`
+
+A React Hook that manages attaching and detaching listeners for you as the component mounts and unmounts.
+
+> `````
+>  useFirestoreConnect(queriesConfigs)
+> `````
 
 A React hook that automatically listens/unlistens to provided Cloud Firestore paths. Examples:
 
@@ -219,6 +239,16 @@ Arguments:
 
 Make sure the Cloud Firestore is imported including its reducer before attempting to use.
 
+##### `withFirestore()`
+
+A Higher Order Component that attaches `firestore`, `firebase` and `dispatch` as props to React components. Therefore, `withFirestore` extends `React.Component`.
+
+> `````
+> export default withFirestore(WrappedComponent);
+> `````
+
+Arguments:
+  1. `WrappedComponent` (A React Component)
 
 
 ## Notes on Redux
@@ -473,7 +503,7 @@ Make sure the Cloud Firestore is imported including its reducer before attemptin
 3. **Unmounting** occurs when the component is being removed from the DOM. It only has one method:
     * `componentWillUnmount()`: Can be used to perform any cleanup such as unsubscribing or canceling a timer.
 
-## Notes on Firebase
+## Notes on Firebase and Firestore
 
 * What is **Firebase**?
   * A **realtime, cloud-based NoSQL database solution** offered by Google.
@@ -500,6 +530,60 @@ Make sure the Cloud Firestore is imported including its reducer before attemptin
   * Lack of control. (If another service writes your back end, you can only make customizations the service allows)
   * Cost.
   * Stability. (You may risk losing your backend if a BaaS provider closes doors)
+
+### Getting Data From Firestore
+
+#### `get()`
+
+By default, a `get` call will attempt to fetch the latest document snapshot from your database. Example of retrieving the contents of a single document using `get()`:
+
+> `````
+> var docRef = db.collection("cities").doc("SF");
+> docRef.get().then(function(doc) {
+>     if (doc.exists) {
+>         console.log("Document data:", doc.data());
+>     } else {
+>         // doc.data() will be undefined in this case
+>         console.log("No such document!");
+>     }
+> }).catch(function(error) {
+>     console.log("Error getting document:", error);
+> });
+> `````
+
+_Note:_ If there is no document at the location referenced by `docRef`, the resulting `document` will be empty and calling `exists` on it will return false.
+
+### Get multiple documents from a collection
+
+#### `where()`
+
+You can also retrieve multiple documents with one request by querying documents in a collection. For example, you can use `where()` to query for all of the documents that meet a certain condition, then use `get()` to retrieve the results:
+
+> `````
+> db.collection("cities").where("capital", "==", true)
+>     .get()
+>     .then(
+>       ...  
+>     )
+>     .catch(function(error) {
+>         console.log("Error getting documents: ", error);
+>     });
+> `````
+
+In addition, you can retrieve _all_ documents in a collection by omitting the `where()` filter entirely.
+
+### Update a document
+
+#### `update()`
+
+To update some fields of a document without overwriting the entire document.
+
+> `````
+> var washingtonDCRef = db.collection("cities").doc("DC");
+> washingtonDCRef.update({
+>   capital: true
+> })
+> `````
 
 ## About NoSQL
 
