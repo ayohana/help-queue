@@ -6,7 +6,7 @@
 
 #### By **Adela Darmansyah**
 
-[Sample Component Diagrams](#Sample-Component-Diagram) | [Notes on React](#Notes-on-React) | [Hooks](#Hooks) | [Notes on Redux](#Notes-on-Redux) | [React-Redux](#React-Redux) | [Testing with Jest](#Testing-with-Jest) | [Component Life Cycle Methods](#Component-Life-Cycle-Methods) | [Notes on Firebase](#Notes-on-Firebase) | [About NoSQL](#About-NoSQL) | [ACID vs BASE](#ACID-vs-BASE) | [The CAP Theorem](#The-CAP-Theorem)
+[Sample Component Diagrams](#Sample-Component-Diagram) | [Notes on React](#Notes-on-React) | [Notes on Redux](#Notes-on-Redux) | [React-Redux](#React-Redux) | [Testing with Jest](#Testing-with-Jest) | [Component Life Cycle Methods](#Component-Life-Cycle-Methods) | [Firebase and Firestore](#Firebase-and-Firestore) | [Hooks](#Hooks) | [About NoSQL](#About-NoSQL) | [ACID vs BASE](#ACID-vs-BASE) | [The CAP Theorem](#The-CAP-Theorem)
 
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/ayohana/help-queue/master?color=%23DE98B2&style=for-the-badge) ![GitHub language count](https://img.shields.io/github/languages/count/ayohana/help-queue?color=%23DE98B2&style=for-the-badge) ![GitHub top language](https://img.shields.io/github/languages/top/ayohana/help-queue?color=%23DE98B2&style=for-the-badge)
 
@@ -27,6 +27,9 @@ Version 3.0:
 ![Component Diagram Version 3.0](./public/sample-component-diagram-3.jpg)
 
 ## Notes on React
+
+<details>
+  <summary>Click to expand!</summary>
 
 ### What is React?
 
@@ -168,90 +171,12 @@ After crafting its own virtual DOM, React then compares it to the "actual" DOM i
 
   * It's common practice to _prefix_ the name of an _event handler function_ with `handle`. Any _props_ containing that function will be _prefixed_ with `on`. This is because the prop will be used when the event occurs, but the function itself is what actually handles the necessary actions. It also ensures the names are similar enough to easily determine which props and functions correspond, yet different enough to determine when we're referencing a function and when we're referencing a prop containing a function.
 
-## Hooks
-
-**Hooks** let you use state and other React features without writing a class. A hook is simply a way to "hook" a piece of state to a functional component.
-
-#### Basic React Hooks
-
-##### `useState()`
-
-> `````
-> const [state, setState] = useState(initialState);
-> `````
-
-* Returns:
-  1. A stateful value
-  2. A function to update #1
-
-* During the initial render, the returned state (`state`) is the same as the value passed as the first argument (`initialState`).
-
-* The `setState` function is used to update the state.
-    > `````
-    > setState(newState);
-    > `````
-    * Argument:
-        1. A new state value
-    * The function will then enqueue a re-render of the component.
-
-#### React Redux Firebase Hooks
-
-##### `useFirestore()`
-
-A React Hook that returns firestore object. Example:
-
-> `````
->  const firestore = useFirestore()
->   function addTodo() {
->     const exampleTodo = { done: false, text: 'Sample' }
->     return firestore.collection('todos').add(exampleTodo)
->   }
-> `````
-
-Returns: (Object) an extended Firestore instance
-
-##### `useFirestoreConnect()`
-
-A React Hook that manages attaching and detaching listeners for you as the component mounts and unmounts.
-
-> `````
->  useFirestoreConnect(queriesConfigs)
-> `````
-
-A React hook that automatically listens/unlistens to provided Cloud Firestore paths. Examples:
-
-> `````
->  useFirestoreConnect('todos')
->// sync todos collection from Firestore into redux
-> `````
-
-> `````
-> useFirestoreConnect([{
->    collection: 'todos',
->    doc: todoId
->  }])
-> // use object as query
-> // doc: todoId specifies to listen to changes to a document with an id of todoId from the todos collection
-> `````
-
-Arguments:
-  1. `queriesConfigs` (object/string/array of object or string/function that returns object/string/array of object or string)
-
-Make sure the Cloud Firestore is imported including its reducer before attempting to use.
-
-##### `withFirestore()`
-
-A Higher Order Component that attaches `firestore`, `firebase` and `dispatch` as props to React components. Therefore, `withFirestore` extends `React.Component`.
-
-> `````
-> export default withFirestore(WrappedComponent);
-> `````
-
-Arguments:
-  1. `WrappedComponent` (A React Component)
-
+</details>
 
 ## Notes on Redux
+
+<details>
+  <summary>Click to expand!</summary>
 
 ### What is Redux?
 
@@ -417,7 +342,12 @@ Arguments:
 
 * Naming convention for Redux Actions: capitalize actions and separate words with an underscore.
 
+</details>
+
 ## React Redux
+
+<details>
+  <summary>Click to expand!</summary>
 
 * Add `Redux` and `React Redux` bindings to your project by running the following command:
   > `npm install redux@4.0.5 react-redux@7.1.3`
@@ -477,13 +407,23 @@ Arguments:
       * An object.
       * This object, normally referred to as `stateProps`, will be merged as props to your connected component.
 
+</details>
+
 ## Testing with Jest
+
+<details>
+  <summary>Click to expand!</summary>
 
 ### Smoke Tests
 
 * A **smoke test** is just a simple test to ensure the basic functionality works. It isn't comprehensive testing, but it will get the job done.
 
+</details>
+
 ## Component Life Cycle Methods
+
+<details>
+  <summary>Click to expand!</summary>
 
 * **The React lifecycle** is _a series of methods_ that is always called in a certain order.
 
@@ -503,7 +443,9 @@ Arguments:
 3. **Unmounting** occurs when the component is being removed from the DOM. It only has one method:
     * `componentWillUnmount()`: Can be used to perform any cleanup such as unsubscribing or canceling a timer.
 
-## Notes on Firebase and Firestore
+</details>
+
+## Firebase and Firestore
 
 * What is **Firebase**?
   * A **realtime, cloud-based NoSQL database solution** offered by Google.
@@ -600,6 +542,122 @@ To delete a specific field:
 > `````
 
 _Note_: Deleting collections from a Web client is not recommended.
+
+## Hooks
+
+**Hooks** let you use state and other React features without writing a class. A hook is simply a way to "hook" a piece of state to a functional component. Common naming convention for Hooks: they start with "use" e.g. `useState()`, `useSelector()`
+
+#### Basic React Hooks
+
+##### `useState()`
+
+> `````
+> const [state, setState] = useState(initialState);
+> `````
+
+* Returns:
+  1. A stateful value
+  2. A function to update #1
+
+* During the initial render, the returned state (`state`) is the same as the value passed as the first argument (`initialState`).
+
+* The `setState` function is used to update the state.
+    > `````
+    > setState(newState);
+    > `````
+    * Argument:
+        1. A new state value
+    * The function will then enqueue a re-render of the component.
+
+#### React Redux Hooks
+
+##### `useSelector()`
+
+> `````
+> import React from 'react'
+> import { useSelector } from 'react-redux'
+> 
+> export const CounterComponent = () => {
+>   const counter = useSelector(state => state.counter)
+>   return <div>{counter}</div>
+> }
+> `````
+
+Allows you to extract data **from the Redux store state**, using a selector function.
+
+> `````
+> // Using props via closure to determine what to extract:
+>
+> import React from 'react'
+> import { useSelector } from 'react-redux'
+>
+> export const TodoListItem = props => {
+>   const todo = useSelector(state => state.todos[props.id])
+>   return <div>{todo.text}</div>
+> }
+> `````
+
+* `useSelector()` will also _subscribe_ to the Redux store, and run your selector whenever an action is dispatched.
+
+* `useSelector()` uses strict `===` reference equality checks **by default**, not shallow equality.
+
+* _Note_: The selector function should be **pure** since it is potentially executed multiple times and at arbitrary points in time.
+
+#### React Redux Firebase Hooks
+
+##### `useFirestore()`
+
+A React Hook that returns firestore object. Example:
+
+> `````
+>  const firestore = useFirestore()
+>   function addTodo() {
+>     const exampleTodo = { done: false, text: 'Sample' }
+>     return firestore.collection('todos').add(exampleTodo)
+>   }
+> `````
+
+Returns: (Object) an extended Firestore instance
+
+##### `useFirestoreConnect()`
+
+A React Hook that manages attaching and detaching listeners for you as the component mounts and unmounts.
+
+> `````
+>  useFirestoreConnect(queriesConfigs)
+> `````
+
+In other words, it's a React hook that automatically listens/unlistens to provided Cloud Firestore paths. Examples:
+
+> `````
+>  useFirestoreConnect('todos')
+>// sync todos collection from Firestore into redux
+> `````
+
+> `````
+> useFirestoreConnect([{
+>    collection: 'todos',
+>    doc: todoId
+>  }])
+> // use object as query
+> // doc: todoId specifies to listen to changes to a document with an id of todoId from the todos collection
+> `````
+
+Arguments:
+  1. `queriesConfigs` (object/string/array of object or string/function that returns object/string/array of object or string)
+
+Make sure the Cloud Firestore is imported including its reducer before attempting to use.
+
+##### `withFirestore()`
+
+A Higher Order Component that attaches `firestore`, `firebase` and `dispatch` as props to React components. Therefore, `withFirestore` extends `React.Component`.
+
+> `````
+> export default withFirestore(WrappedComponent);
+> `````
+
+Arguments:
+  1. `WrappedComponent` (A React Component)
 
 ## About NoSQL
 
