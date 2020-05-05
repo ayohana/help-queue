@@ -1,11 +1,20 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Header(){
   return (
-    <h1>Help Queue</h1>
+    <React.Fragment>
+      <h1> Help Queue</h1>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/signin">Sign In</Link>
+        </li>
+      </ul>
+    </React.Fragment>
   );
 }
-
-// Note also that we didn't need to wrap our JSX code in a <ReactFragment>. This is because our component is only returning one element. If we were returning multiple elements, we'd need to use a fragment.
 
 export default Header;
