@@ -6,7 +6,7 @@ import EditTicketForm from './EditTicketForm';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as a from './../actions';
-import { withFirestore } from 'react-redux-firebase'
+import { withFirestore, isLoaded } from 'react-redux-firebase'
 
 class TicketControl extends React.Component {
   
@@ -103,38 +103,55 @@ class TicketControl extends React.Component {
   }
 
   render(){
-    let currentlyVisibleState = null;
-    let buttonText = null;
-
-    if (this.state.editing) {
-      currentlyVisibleState = <EditTicketForm ticket={this.state.selectedTicket} onEditTicket={this.handleEditingTicketInList} />
-      buttonText = "Return to Ticket List";
-    } else if (this.state.selectedTicket != null) {
-      currentlyVisibleState = <TicketDetail
-        ticket={this.state.selectedTicket}
-        onClickingDelete={this.handleDeletingTicket}
-        onClickingEdit={this.handleEditClick}
-      />
-      buttonText = "Return to Ticket List";
-    } else if (this.props.formVisibleOnPage) {
-      currentlyVisibleState = <NewTicketForm onNewTicketCreation={this.handleAddingNewTicketToList}/>
-      buttonText = "Return to Ticket List";
-    } else {
-      currentlyVisibleState = <TicketList ticketList={this.props.masterTicketList} onTicketSelection={this.handleChangingSelectedTicket} />
-      // Because a user will actually be clicking on the ticket in the Ticket component, we will need to pass our new handleChangingSelectedTicket method as a prop.
-      buttonText = "Add Ticket";
+    const auth = this.props.firebase.auth();
+    if (!isLoaded(auth)) {
+      return (
+        <React.Fragment>
+          <h1>Loading...</h1>
+        </React.Fragment>
+      )
     }
-    return(
-      <React.Fragment>
-        {currentlyVisibleState}
-    <button onClick={this.handleClick}>{buttonText}</button>
-      {/* But what is `this`? In this case, we are going to be rendering an object that's an instance of the TicketControl component. this refers to the specific instance that is being rendered.
-      Note that we don't use this with functional components - just class components.  */}
-      </React.Fragment>
-    );
+    if ((isLoaded(auth)) && (auth.currentUser == null)) {
+      return (
+        <React.Fragment>
+          <h1>You must be signed in to access the queue.</h1>
+        </React.Fragment>
+      )
+    } 
+    if ((isLoaded(auth)) && (auth.currentUser != null)) {
+
+      let currentlyVisibleState = null;
+      let buttonText = null;
+
+      if (this.state.editing) {
+        currentlyVisibleState = <EditTicketForm ticket={this.state.selectedTicket} onEditTicket={this.handleEditingTicketInList} />
+        buttonText = "Return to Ticket List";
+      } else if (this.state.selectedTicket != null) {
+        currentlyVisibleState = <TicketDetail
+          ticket={this.state.selectedTicket}
+          onClickingDelete={this.handleDeletingTicket}
+          onClickingEdit={this.handleEditClick}
+        />
+        buttonText = "Return to Ticket List";
+      } else if (this.props.formVisibleOnPage) {
+        currentlyVisibleState = <NewTicketForm onNewTicketCreation={this.handleAddingNewTicketToList}/>
+        buttonText = "Return to Ticket List";
+      } else {
+        currentlyVisibleState = <TicketList ticketList={this.props.masterTicketList} onTicketSelection={this.handleChangingSelectedTicket} />
+        // Because a user will actually be clicking on the ticket in the Ticket component, we will need to pass our new handleChangingSelectedTicket method as a prop.
+        buttonText = "Add Ticket";
+      }
+      return(
+        <React.Fragment>
+          {currentlyVisibleState}
+        <button onClick={this.handleClick}>{buttonText}</button>
+          {/* But what is `this`? In this case, we are going to be rendering an object that's an instance of the TicketControl component. this refers to the specific instance that is being rendered.
+          Note that we don't use this with functional components - just class components.  */}
+        </React.Fragment>    
+      );
+    }
   }
 }
-
 // TicketControl.propTypes = {
 //   masterTicketList: PropTypes.object
 // };
